@@ -19,7 +19,6 @@ public  class SoqlDemo2 {
             for (opportunity eaOpp : lstOpp) {
                 System.debug('----> Name of opp is '+eaOpp.Name+' and amount '+eaOpp.Amount);
             }
-
         }
     }
 }

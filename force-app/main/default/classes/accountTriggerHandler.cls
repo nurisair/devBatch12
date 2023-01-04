@@ -1,20 +1,27 @@
-public with sharing class accountTriggerHandler {
-    public static void updateAcctDesc(list<account> accTrNew, List<Account> accTrOld, map<Id, Account> trOldMap, map<id, Account> trNewMap) {
-        for (Account eachAccount : accTrNew) {
+public class accountTriggerHandler {
+    public static void updateAccountDescription(List<account> accTriggerNew, List<account> accTriggerOld, 
+                                    Map<id, account> accTriggerNewMap, Map<id, account> accTriggerOldMap) {
+        for (Account eachAccount : accTriggerNew) {
+            boolean updateDesc = false;
             if (Trigger.isInsert && eachAccount.Active__c == 'Yes') {
-                eachAccount.Description = 'Account is now Active. Enjoy, celebrate.';
+                updateDesc = true;
             }
             if (Trigger.isUpdate) {
-                Account oldAcc = trOldMap.get(eachAccount.Id);
-                Account newAcc = trNewMap.get(eachAccount.Id);
+                Id accId = eachAccount.Id;
+                Account oldAcc = accTriggerOldMap.get(accId);
+                Account newAcc = accTriggerNewMap.get(eachAccount.Id);
                 if(eachAccount.Active__c == 'Yes' && oldAcc.Active__c != newAcc.Active__c){
-                    eachAccount.Description = 'Account is now Active. Enjoy, celebrate.';
+                    updateDesc = true;
                 }
-
+            }
+            if (updateDesc) {
+                eachAccount.Description = 'Account is now Active. Enjoy, celebrate, have fun.';
             }
         }
     }
-    public static void updateVIPforContacts(List<account> accTriggerNew, List<account> accTriggerOld,Map<id, account> accTriggerNewMap, Map<id, account> accTriggerOldMap) {
+
+    public static void updateVIPforContacts(List<account> accTriggerNew, List<account> accTriggerOld, 
+    Map<id, account> accTriggerNewMap, Map<id, account> accTriggerOldMap) {
             //set of account ids
             set<id> accountIds = new set<id>();
         //for trigger.new
@@ -36,10 +43,9 @@ public with sharing class accountTriggerHandler {
                 account newAcc = accTriggerNewMap.get(eachContact.AccountId);
                 boolean accVIP = newAcc.vip__c;
 
-                eachContact.vip__c = accVIP;
+                eachContact.vip__c = accTriggerNewMap.get(eachContact.AccountId).vip__c;
             }
             update allContacts;
         }
-        //update contacts
     }
 }

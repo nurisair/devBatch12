@@ -29,4 +29,13 @@ public class SalesforceProjectTriggerHandler {
         }
  
     }
+    @future
+    public static void updateDesc(set<id> spIds) {
+        System.debug('Inside Future Method');
+        List<Salesforce_Project__c> allSP = [select id, description__c FROM Salesforce_Project__c WHERE id in:spIds];
+        for (salesforce_Project__c eaSP : allSP) {
+            eaSP.Description__c+='. Updated from FUTURE ';
+        }
+        update allSP;
+    }
 }
