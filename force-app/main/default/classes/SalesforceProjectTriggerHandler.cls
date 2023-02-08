@@ -1,15 +1,27 @@
 public class SalesforceProjectTriggerHandler {
     public static void createDefaultTrigger(list<salesforce_project__c> spTriggerNew) {
-        List<Salesforce_ticket__c> STList = new List<Salesforce_ticket__c>();
-        for (salesforce_project__c eaSP : spTriggerNew) {
+        try{
+            List<Salesforce_ticket__c> STList = new List<Salesforce_ticket__c>();
+            DefaultTicketInfo__c defaultValues = DefaultTicketInfo__c.getOrgDefaults();
+            for (salesforce_project__c eaSP : spTriggerNew) {
             Salesforce_Ticket__c st = new Salesforce_Ticket__c();
-            st.Subject__c='Default st';
+            st.Subject__c=defaultValues.Subject__c;
             st.Salesforce_Project__c=eaSP.Id;
+            st.Priority__c='Medium';
+            st.Description__c=defaultValues.description__c;
             STList.add(st);
         }
         if (!stlist.isEmpty()) {
             insert STList;
         }
+        }catch(Exception ex){
+            for (salesforce_project__c eaSP : spTriggerNew) {
+                eaSP.addError('Error creating ticket. Call your Admin!');
+            }
+            
+        }
+        
+       
     }
     public static void validateSPComplete(list<salesforce_project__c> spTriggerNew,list<salesforce_project__c> spTriggerOld, Map<Id,salesforce_project__c> spTriggerNewMap, Map<Id,salesforce_project__c> spTriggerOldMap) {
         

@@ -1,6 +1,23 @@
 trigger accounMapsTrigger on Account (before insert, before update, after insert, after update) {
     if (Trigger.isBefore) {
-        accountTriggerHandler.updateAcctDesc(trigger.new, trigger.old, trigger.oldMap, trigger.newMap);
+        for (Account eachAccount : Trigger.new) {
+            if (Trigger.isInsert && eachAccount.Active__c == 'Yes') {
+                eachAccount.Description = 'Account is now Active. Enjoy, celebrate.';
+            }
+            if (Trigger.isUpdate) {
+                //get OldAccount value -> using OldMap
+                    //get Old active value
+                //get newAccount value -> using NewMap
+                    //get new active value
+                //check if active field is updated TO Yes.
+                Account oldAcc = trigger.oldMap.get(eachAccount.Id);
+                Account newAcc = Trigger.newMap.get(eachAccount.Id);
+                if(eachAccount.Active__c == 'Yes' && oldAcc.Active__c != newAcc.Active__c){
+                    eachAccount.Description = 'Account is now Active. Enjoy, celebrate.';
+                }
+
+            }
+        }
     }
 }    
 

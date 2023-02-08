@@ -36,11 +36,14 @@ public class DmlDemo {
         System.debug(cnt);
     }
     public static void dmlDemoUpdate5() {
+        
         Salesforce_Project__c sp=[select id FROM Salesforce_Project__c ORDER BY CreatedDate DESC limit 1];
+
         Salesforce_Ticket__c st=new Salesforce_Ticket__c();
         st.Subject__c='Learn DML update';
         st.Priority__c='High';
         st.Requested_by_date__c=date.today();
+
         st.Salesforce_Project__c=sp.id;
         insert st;
     }

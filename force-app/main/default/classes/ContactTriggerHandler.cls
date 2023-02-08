@@ -10,7 +10,8 @@ public with sharing class ContactTriggerHandler {
     public static void updateContactValidation1(list<contact> conTriggerNew, list<contact> conTriggerOld, map<id, contact> conTriggerNewMap, map<id, contact> conTriggerOldMap ) {
         for (contact eaCon : conTriggerNew) {
             if (eaCon.LeadSource!=conTriggerOldMap.get(eaCon.Id).LeadSource) {
-                eaCon.LeadSource.addError('Come on Man! No updates on Lead Source!');
+                string CustomM = system.label.ContactValidation2;
+                eaCon.LeadSource.addError(CustomM);
             }
         }
     }

@@ -1,4 +1,4 @@
-public class DmlDemo9 {
+public with sharing class DmlDemo11 {
     public static void dmlInsertDemo_stndObj() {
         //we will create account record using Apex.
         //1. create new instance.
@@ -18,7 +18,6 @@ public class DmlDemo9 {
         //set field values
         spNew.project_name__c = 'Teach DML to Batch12';
         spNew.description__c = 'All of you doing great.';
-        
         //3.  dml (insert)
         insert spNew;
     }

@@ -7,6 +7,6 @@ trigger SalesforceProjectTrigger on Salesforce_Project__c(before insert, after i
         System.debug('FUTURE Methd Called.');
     }
     if (trigger.isBefore&&trigger.isUpdate){
-        //SalesforceProjectTriggerHandler.validateSPComplete(Trigger.New, Trigger.old, trigger.oldMap, trigger.newMap);
+        SalesforceProjectTriggerHandler.validateSPComplete(Trigger.New, Trigger.old, trigger.oldMap, trigger.newMap);
     }
 }
